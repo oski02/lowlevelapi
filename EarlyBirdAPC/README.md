@@ -4,7 +4,11 @@ Dando un vistazo a la Tecnica EarlyBirdAPC empleando LowLevelAPI por https://sev
 
 
 
-## Salida de dumpbin empleando el ejemplo del post: https://sevrosecurity.com/2020/04/13/process-injection-part-2-queueuserapc/
+## Salida de dumpbin empleando el ejemplo del post sevrosesecurity: 
+
+En el post deee sevrosesecurity cuando se hace uso del ejemplo de LowLevelAPI no se llega a emplear la funcion NtWaitForSingleObject y se usa la funcion WaitForSingleobject.
+
+https://sevrosecurity.com/2020/04/13/process-injection-part-2-queueuserapc/
 
     KERNEL32.dll
              140003000 Import Address Table
@@ -35,6 +39,8 @@ Dando un vistazo a la Tecnica EarlyBirdAPC empleando LowLevelAPI por https://sev
 
 
 ## Salida de dumpbin pasandola a full lowlevelapi:
+
+Observamos que al hacer uso de NtWaitForSingleObject ya no nos aparece la importacion de la funcion WaitForSingleObject, reduciendo el numero de importaciones a kernel32.dll y siendo mas sigilosos frente a un EDR.
 
     KERNEL32.dll
              140003000 Import Address Table
